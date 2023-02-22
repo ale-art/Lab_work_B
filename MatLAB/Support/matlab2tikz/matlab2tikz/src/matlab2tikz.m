@@ -715,12 +715,6 @@ function [m2t, pgfEnvironments] = handleAllChildren(m2t, h)
 
             case 'rectangle'
                 [m2t, str] = handleObject(m2t, child, @drawRectangle);
-		
-	    case 'doubleendarrowshape'
-                [m2t, str] = handleObject(m2t, child, @drawArrow);
-	
-	    case 'arrowshape'
-                [m2t, str] = handleObject(m2t, child, @drawArrow);
 
             case 'histogram'
                 [m2t, str] = handleObject(m2t, child, @drawHistogram);
@@ -1811,23 +1805,15 @@ function [m2t, str] = drawLine(m2t, h, custom)
 
     % build the data matrix
     data       = getXYZDataFromLine(m2t, h);
-    xDeviation = getXDeviations(h);
     yDeviation = getYDeviations(h);
-    
-    errDir = '';
-    if ~isempty(xDeviation)
-        data = [data, xDeviation];
-        errDir = [errDir, 'x'];
-    end
     if ~isempty(yDeviation)
         data = [data, yDeviation];
-        errDir = [errDir, 'y'];
     end
 
     % Check if any value is infinite/NaN. In that case, add appropriate option.
     m2t = jumpAtUnboundCoords(m2t, data);
 
-    [m2t, dataString]  = writePlotData(m2t, data, drawOptions, errDir);
+    [m2t, dataString]  = writePlotData(m2t, data, drawOptions);
     [m2t, labelString] = addLabel(m2t, h);
 
     str = [dataString, labelString];
@@ -1856,7 +1842,7 @@ function bool = isLineVisible(h)
     bool = isVisible(h) && (hasLines || hasMarkers || hasDeviations);
 end
 % ==============================================================================
-function [m2t, str] = writePlotData(m2t, data, drawOptions, errDir)
+function [m2t, str] = writePlotData(m2t, data, drawOptions)
     % actually writes the plot data to file
     str = '';
 
@@ -1883,16 +1869,8 @@ function [m2t, str] = writePlotData(m2t, data, drawOptions, errDir)
             if (opts_has(drawOptions,'error bar style'))
                 tmpOptions = opts_new();
                 tmpOptions = opts_add(tmpOptions,'error bars/.cd','');
-                % add x direction error bar style if necessary
-                if contains(errDir, 'x')
-                    tmpOptions = opts_add(tmpOptions,'x dir','both');
-                    tmpOptions = opts_add(tmpOptions,'x explicit','');
-                end
-                % add y direction error bar style if necessary
-                if contains(errDir, 'y')
-                    tmpOptions = opts_add(tmpOptions,'y dir','both');
-                    tmpOptions = opts_add(tmpOptions,'y explicit','');
-                end
+                tmpOptions = opts_add(tmpOptions,'y dir','both');
+                tmpOptions = opts_add(tmpOptions,'y explicit','');
                 tmpOptions = opts_copy(drawOptions, 'error bar style', tmpOptions);
                 tmpOptions = opts_copy(drawOptions, 'error mark options', tmpOptions);
 
@@ -1917,7 +1895,7 @@ function [m2t, str] = writePlotData(m2t, data, drawOptions, errDir)
                 opts = opts_print(drawOptions);
             end
 
-            [m2t, Part] = plotLine2d(m2t, opts, errorBarOpts, dataCell{k}, errDir);
+            [m2t, Part] = plotLine2d(m2t, opts, errorBarOpts, dataCell{k});
             strPart{k} = Part;
         end
         strPart = join(m2t, strPart, '');
@@ -1973,28 +1951,20 @@ function [m2t, labelCode] = addLabel(m2t, h)
     end
 end
 % ==============================================================================
-function [m2t,str] = plotLine2d(m2t, opts, errorBarOpts, data, errDir)
+function [m2t,str] = plotLine2d(m2t, opts, errorBarOpts, data)
+    errorbarMode = (size(data,2) == 4); % is (optional) yDeviation given?
 
     errorBar = '';
-    if ~isempty(errDir)
+    if errorbarMode
         m2t      = needsPgfplotsVersion(m2t, [1,9]);
         errorBar = sprintf('plot [%s]\n', errorBarOpts);
     end
 
     % Convert to string array then cell to call sprintf once (and no loops).
     [m2t, table, tableOptions] = makeTable(m2t, repmat({''}, size(data,2)), data);
-    switch errDir
-        case 'x'
-            tableOptions = opts_add(tableOptions, 'x error plus index', '2');
-            tableOptions = opts_add(tableOptions, 'x error minus index', '3');
-        case 'y'
-            tableOptions = opts_add(tableOptions, 'y error plus index', '2');
-            tableOptions = opts_add(tableOptions, 'y error minus index', '3');
-        case 'xy'
-            tableOptions = opts_add(tableOptions, 'x error plus index', '2');
-            tableOptions = opts_add(tableOptions, 'x error minus index', '3');
-            tableOptions = opts_add(tableOptions, 'y error plus index', '4');
-            tableOptions = opts_add(tableOptions, 'y error minus index', '5');
+    if errorbarMode
+        tableOptions = opts_add(tableOptions, 'y error plus index', '2');
+        tableOptions = opts_add(tableOptions, 'y error minus index', '3');
     end
 
     % Print out
@@ -2672,7 +2642,7 @@ function [m2t, str] = imageAsPNG(m2t, handle, xData, yData, cData, custom)
         alphaOpts = {};
         hasAlpha = false;
     else
-        alphaOpts = {'Alpha', double(alphaData)};
+        alphaOpts = {'Alpha', alphaData};
     end
     if (ndims(colorData) == 2) %#ok don't use ismatrix (cfr. #143)
         if size(m2t.current.colormap, 1) <= 256 && ~hasAlpha
@@ -3300,10 +3270,6 @@ function m2t = drawAnnotationsHelper(m2t,h)
             % Rectangle
         case {'scribe.scriberect', 'matlab.graphics.shape.Rectangle'}
             [m2t, str] = handleObject(m2t, h, @drawRectangle);
-            
-        case guitypes()
-            % don't do anything for GUI objects and their children
-            [m2t, str] = handleObject(m2t, h, @drawNothing);                
 
         otherwise
             userWarning(m2t, 'Don''t know annotation ''%s''.', cl);
@@ -3594,18 +3560,12 @@ function [style] = getXYAlignmentOfText(handle, style)
             horizontal = 'left';
     end
     alignment = strtrim(sprintf('%s %s', vertical, horizontal));
-    if strcmp(VerticalAlignment, 'middle') && strcmp(HorizontalAlignment, 'center')
-        alignment = 'centered';
-    end
-    
     if ~isempty(alignment)
         style = opts_add(style, alignment);
     end
 
     % Set 'align' option that is needed for multiline text
     style = opts_add(style, 'align', HorizontalAlignment);
-    
-    style = opts_add(style, 'inner sep', '0');
 end
 % ==============================================================================
 function [style] = getRotationOfText(m2t, handle, style)
@@ -4709,25 +4669,11 @@ function [m2t, str] = drawErrorBars(m2t, h, custom)
     % such that the code is easier to read where it is called.
 end
 % ==============================================================================
-function [xDeviations] = getXDeviations(h)
-    % Retrieves left/right uncertainty data
-
-    rightDev = getOrDefault(h, 'XPositiveDelta', []);
-    leftDev = getOrDefault(h, 'XNegativeDelta', []);
-
-    xDeviations = [rightDev(:), leftDev(:)];
-end
-% ==============================================================================
 function [yDeviations] = getYDeviations(h)
     % Retrieves upper/lower uncertainty data
 
-    upDev = getOrDefault(h, 'YPositiveDelta', []);
-    loDev = getOrDefault(h, 'YNegativeDelta', []);
-
-    if isempty(upDev)
-      upDev = getOrDefault(h, 'UData', []);
-      loDev = getOrDefault(h, 'LData', []);
-    end
+    upDev = getOrDefault(h, 'UData', []);
+    loDev = getOrDefault(h, 'LData', []);
 
     yDeviations = [upDev(:), loDev(:)];
 end
@@ -5648,7 +5594,8 @@ function pTickLabels = formatPgfTickLabels(m2t, plotLabelsNecessary, ...
             % If the axis is logscaled, MATLAB does not store the labels,
             % but the exponents to 10
             if isLogAxis && strcmpi(tickLabelMode,'auto')
-                tickLabels{k} = sprintf('$10^{%s}$', str);
+                B = string(regexp(tickLabels{k},'[-]\d*|\d*','match'));
+                tickLabels{k} = sprintf('$10^{%s}$', B(2));
             end
         end
         tickLabels = cellfun(@(l)(sprintf('{%s}',l)), tickLabels, ...

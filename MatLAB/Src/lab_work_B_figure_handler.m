@@ -16,7 +16,7 @@ secPausa = 0.01;
 
 fprintf("*** Conversione e salvataggio immagini Tikz ***\n...\n");
 
-lab_work_A_init_routine;
+lab_work_B_init_routine;
 
 
 % *** Esempio di salvataggio ***
@@ -36,15 +36,32 @@ lab_work_A_init_routine;
 
 
 %% 
-sensor_curve;
-set(gcf,'visible','off')
+estimation_wI_u1;
+set(gcf,'visible','off');
 matlab2tikz('filename',...
-    'Assignment/Figures/Sensor_curve/sensor_curve.tex',...
+    'Figures/Estimation_wI_u1/estimation_wI_u1.tex',...
     'showInfo',false,'strict',true,'standalone',true,...
     'extraaxisoptions',extraOpt);
 pause(secPausa);
 
 
+%%
+estimation_wI_u2;
+set(gcf,'visible','off');
+matlab2tikz('filename',...
+    'Figures/Estimation_wI_u2/Estimation_wI_u2.tex',...
+    'showInfo',false,'strict',true,'standalone',true,...
+    'extraaxisoptions',extraOpt);
+pause(secPausa);
 
+
+%%
+estimation_wI_u3;
+set(gcf,'visible','off');
+matlab2tikz('filename',...
+    'Figures/Estimation_wI_u3/Estimation_wI_u3.tex',...
+    'showInfo',false,'strict',true,'standalone',true,...
+    'extraaxisoptions',extraOpt);
+pause(secPausa);
 %% 
 fprintf("*** Completato*** \n \n");

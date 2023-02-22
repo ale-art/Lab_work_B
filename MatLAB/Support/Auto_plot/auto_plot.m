@@ -44,7 +44,7 @@ label_vect = strsplit(varargin{nargin},'|');
 %     display(legend_vect);
 
 % Il penultimo parametro passato è la stringa degli elementi della legenda.
-legend_vect = strsplit(varargin{nargin-1},'|');
+legend_vect = strsplit(varargin{nargin-1},'|','CollapseDelimiters',false);
 %     display(legend_vect);
 
 % Il terzultimo parametro passato è la stringa del titolo.
@@ -52,7 +52,7 @@ myTitle = varargin{nargin-2};
 
 x = varargin{1};
 
-if numPlotInputs ~= 0
+if numPlotInputs ~= -1
     for i = 1:numPlotInputs
         funToPlot{2*i-1} = x(:);
         funToPlot{2*i} = varargin{i+1};
@@ -65,6 +65,9 @@ if ~isempty(varargin{nargin-1})
     name = {};
     legend_vect = cellstr(strcat(legend_vect,"~~~"));
     for i = 1:(length(legend_vect))
+        if legend_vect(i) == "~~~"
+            legend_vect(i) = {''};
+        end
         name(i) = legend_vect(i);
     end
     title(myTitle,'FontSize',10,'interpreter','latex');
