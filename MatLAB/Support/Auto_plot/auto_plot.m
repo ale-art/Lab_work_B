@@ -52,13 +52,14 @@ myTitle = varargin{nargin-2};
 
 x = varargin{1};
 
-for i = 1:numPlotInputs
-    funToPlot{2*i-1} = x(:);
-    funToPlot{2*i} = varargin{i+1};
+if numPlotInputs ~= 0
+    for i = 1:numPlotInputs
+        funToPlot{2*i-1} = x(:);
+        funToPlot{2*i} = varargin{i+1};
+    end
+    p = plot(funToPlot{1:numPlotInputs*2});
+    xlim([x(1),x(end)]);
 end
-
-
-p = plot(funToPlot{1:numPlotInputs*2});
 
 if ~isempty(varargin{nargin-1})
     name = {};
@@ -88,7 +89,5 @@ if ~isempty(varargin{nargin})
     end
 end
 grid on;
-
-xlim([x(1),x(end)]);
 
 end
