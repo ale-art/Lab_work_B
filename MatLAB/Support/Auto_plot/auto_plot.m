@@ -72,8 +72,10 @@ if ~isempty(varargin{nargin-1})
     end
     title(myTitle,'FontSize',10,'interpreter','latex');
     l = legend(name(:),'Location','NorthOutside','Orientation','horizontal', ...
-        'Box','off','interpreter','latex');
+        'Box','off','interpreter','latex', ...
+        'FontSize',10);
     l.ItemTokenSize(1) = 15;
+    set(l,'LineWidth',1.75);
 else
     title(myTitle,'FontSize',10,'interpreter','latex');
 end

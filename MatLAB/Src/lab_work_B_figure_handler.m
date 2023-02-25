@@ -63,5 +63,47 @@ matlab2tikz('filename',...
     'showInfo',false,'strict',true,'standalone',true,...
     'extraaxisoptions',extraOpt);
 pause(secPausa);
+
+
+%% 
+simulation_result_y1;
+set(gcf,'visible','off');
+matlab2tikz('filename',...
+    'Figures/Simulation_result_y1/simulation_result_y1.tex',...
+    'showInfo',false,'strict',true,'standalone',true,...
+    'extraaxisoptions',extraOpt);
+pause(secPausa);
+
+
+%% 
+simulation_result_y2;
+set(gcf,'visible','off');
+matlab2tikz('filename',...
+    'Figures/Simulation_result_y2/simulation_result_y2.tex',...
+    'showInfo',false,'strict',true,'standalone',true,...
+    'extraaxisoptions',extraOpt);
+pause(secPausa);
+
+
+%% 
+simulation_result_y3;
+set(gcf,'visible','off');
+matlab2tikz('filename',...
+    'Figures/Simulation_result_y3/simulation_result_y3.tex',...
+    'showInfo',false,'strict',true,'standalone',true,...
+    'extraaxisoptions',extraOpt);
+pause(secPausa);
+
+
+%%
+numerical_problems_example;
+set(gcf,'visible','off');
+matlab2tikz('filename',...
+    'Figures/Numerical_problems_example/numerical_problems_example.tex',...
+    'showInfo',false,'strict',true,'standalone',true,...
+    'extraaxisoptions',extraOpt);
+pause(secPausa);
+
+
 %% 
 fprintf("*** Completato*** \n \n");
