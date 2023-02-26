@@ -12,6 +12,9 @@
 \usepackage{amsmath}
 
 \begin{document}
+\definecolor{mycolor1}{rgb}{0.00000,0.44700,0.74100}%
+\definecolor{mycolor2}{rgb}{0.85000,0.32500,0.09800}%
+%
 \begin{tikzpicture}
 
 \begin{axis}[%
@@ -46,7 +49,7 @@ ylabel style={font=\color{white!15!black}},
 ylabel={magnitude},
 axis background/.style={fill=white},
 title style={font=\bfseries},
-title={Estimating $w_I$},
+title={Estimating $w_{I_1}$},
 xmajorgrids,
 xminorgrids,
 ymajorgrids,
@@ -63,7 +66,7 @@ xlabel style={font={\Large}},
 ylabel style={font={\Large}},
 zlabel style={font={\Large}}
 ]
-\addplot [color=blue, dotted, line width=0.8pt, forget plot]
+\addplot [color=mycolor1, dotted, line width=0.8pt, forget plot]
   table[row sep=crcr]{%
 0.001	0.000349999956250008\\
 0.00107189131920513	0.000375161907841467\\
@@ -266,7 +269,7 @@ zlabel style={font={\Large}}
 932.930402628469	0.699998391474144\\
 1000	0.6999986000042\\
 };
-\addplot [color=blue, dotted, line width=0.8pt, forget plot]
+\addplot [color=mycolor1, dotted, line width=0.8pt, forget plot]
   table[row sep=crcr]{%
 0.001	0.000279999954514011\\
 0.00107189131920513	0.000300129513359141\\
@@ -469,7 +472,7 @@ zlabel style={font={\Large}}
 932.930402628469	0.49122720160744\\
 1000	0.491227314209085\\
 };
-\addplot [color=blue, dotted, line width=0.8pt, forget plot]
+\addplot [color=mycolor1, dotted, line width=0.8pt, forget plot]
   table[row sep=crcr]{%
 0.001	0.000209999956992013\\
 0.00107189131920513	0.000225097124066567\\
@@ -672,7 +675,7 @@ zlabel style={font={\Large}}
 932.930402628469	0.328124539796443\\
 1000	0.32812459945752\\
 };
-\addplot [color=blue, dotted, line width=0.8pt, forget plot]
+\addplot [color=mycolor1, dotted, line width=0.8pt, forget plot]
   table[row sep=crcr]{%
 0.001	0.000139999964713013\\
 0.00107189131920513	0.000150064741231011\\
@@ -875,7 +878,7 @@ zlabel style={font={\Large}}
 932.930402628469	0.197182873880846\\
 1000	0.197182903012492\\
 };
-\addplot [color=blue, dotted, line width=0.8pt, forget plot]
+\addplot [color=mycolor1, dotted, line width=0.8pt, forget plot]
   table[row sep=crcr]{%
 0.001	6.99999787060096e-05\\
 0.00107189131920513	7.50323661197341e-05\\
@@ -1078,7 +1081,7 @@ zlabel style={font={\Large}}
 932.930402628469	0.0897435050042395\\
 1000	0.0897435159899087\\
 };
-\addplot [color=blue, dotted, line width=0.8pt, forget plot]
+\addplot [color=mycolor1, dotted, line width=0.8pt, forget plot]
   table[row sep=crcr]{%
 0.001	0\\
 0.00107189131920513	0\\
@@ -1281,7 +1284,7 @@ zlabel style={font={\Large}}
 932.930402628469	0\\
 1000	0\\
 };
-\addplot [color=blue, dotted, line width=0.8pt, forget plot]
+\addplot [color=mycolor1, dotted, line width=0.8pt, forget plot]
   table[row sep=crcr]{%
 0.001	6.99999703760188e-05\\
 0.00107189131920513	7.50323558609305e-05\\
@@ -1484,7 +1487,7 @@ zlabel style={font={\Large}}
 932.930402628469	0.076086904879433\\
 1000	0.0760869115743801\\
 };
-\addplot [color=blue, dotted, line width=0.8pt, forget plot]
+\addplot [color=mycolor1, dotted, line width=0.8pt, forget plot]
   table[row sep=crcr]{%
 0.001	0.00013999993139305\\
 0.00107189131920513	0.000150064700195797\\
@@ -1687,7 +1690,7 @@ zlabel style={font={\Large}}
 932.930402628469	0.141414058525775\\
 1000	0.141414069271486\\
 };
-\addplot [color=blue, dotted, line width=0.8pt, forget plot]
+\addplot [color=mycolor1, dotted, line width=0.8pt, forget plot]
   table[row sep=crcr]{%
 0.001	0.0002099998820221\\
 0.00107189131920513	0.000225097031737341\\
@@ -1890,7 +1893,7 @@ zlabel style={font={\Large}}
 932.930402628469	0.198113106255699\\
 1000	0.198113119387204\\
 };
-\addplot [color=blue, dotted, line width=0.8pt, forget plot]
+\addplot [color=mycolor1, dotted, line width=0.8pt, forget plot]
   table[row sep=crcr]{%
 0.001	0.000279999821234171\\
 0.00107189131920513	0.000300129349218303\\
@@ -2093,7 +2096,7 @@ zlabel style={font={\Large}}
 932.930402628469	0.24778749914025\\
 1000	0.247787513592503\\
 };
-\addplot [color=blue, dotted, line width=0.8pt, forget plot]
+\addplot [color=mycolor1, dotted, line width=0.8pt, forget plot]
   table[row sep=crcr]{%
 0.001	0.000349999748000272\\
 0.00107189131920513	0.000375161651371428\\
@@ -2296,7 +2299,7 @@ zlabel style={font={\Large}}
 932.930402628469	0.291666550308851\\
 1000	0.291666565393571\\
 };
-\addplot [color=blue, line width=1.8pt]
+\addplot [color=mycolor1, line width=1.8pt]
   table[row sep=crcr]{%
 0.001	0.000349999956250008\\
 0.00107189131920513	0.000375161907841467\\
@@ -2501,7 +2504,7 @@ zlabel style={font={\Large}}
 };
 \addlegendentry{$l_I$~~~}
 
-\addplot [color=red, dashed, line width=1.8pt]
+\addplot [color=mycolor2, dashed, line width=1.8pt]
   table[row sep=crcr]{%
 0.001	0.000356999953572159\\
 0.00107189131920513	0.000382665143777997\\
@@ -2704,7 +2707,7 @@ zlabel style={font={\Large}}
 932.930402628469	0.699998453934957\\
 1000	0.699998654367586\\
 };
-\addlegendentry{$w_I$~~~}
+\addlegendentry{$w_{I_1}$~~~}
 
 \end{axis}
 \end{tikzpicture}%

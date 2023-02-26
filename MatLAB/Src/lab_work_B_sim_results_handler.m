@@ -1,9 +1,9 @@
 %% Param init
 
 line_width=0.5;
-col1='b';
-col2='b';
-col3='b';
+col1=blue;
+col2=red;
+col3=yellow;
 
 
 %% Handle data
@@ -27,7 +27,7 @@ end
 figure();
 hold on;
 for i=1:length(sim_result)
-   plot(sim_result_y1{i}(:,1),sim_result_y1{i}(:,2),col1, ...
+   plot(sim_result_y1{i}(:,1),sim_result_y1{i}(:,2),'Color',col1, ...
        'LineWidth',line_width);
 end
 leg_entries = [repmat('|',1,n-1) '$y_1$'];
@@ -39,7 +39,7 @@ saveas(gcf,'Plots/simulation_result_y1.m')
 figure();
 hold on;
 for i=1:length(sim_result)
-   plot(sim_result_y2{i}(:,1),sim_result_y2{i}(:,2),col2, ...
+   plot(sim_result_y2{i}(:,1),sim_result_y2{i}(:,2),'Color',col2, ...
        'LineWidth',line_width);
 end
 leg_entries = [repmat('|',1,n-1) '$y_2$'];
@@ -51,7 +51,7 @@ saveas(gcf,'Plots/simulation_result_y2.m')
 figure();
 hold on;
 for i=1:length(sim_result)
-   plot(sim_result_y3{i}(:,1),sim_result_y3{i}(:,2),col2, ...
+   plot(sim_result_y3{i}(:,1),sim_result_y3{i}(:,2),'Color',col3, ...
        'LineWidth',line_width);
 end
 leg_entries = [repmat('|',1,n-1) '$y_3$'];
