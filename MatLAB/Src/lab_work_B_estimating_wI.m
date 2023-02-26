@@ -31,12 +31,12 @@ for tau_1_0=tau_1(1):diff(tau_1)/10:tau_1(2)
     leg_entries = [leg_entries '|'];
 end
 loglog(w,lI,'Color',blue);
-leg_entries = [leg_entries '$l_I$|'];
+leg_entries = [leg_entries '$l_{I_1}$|'];
 
 wI_u1=0.357*s/(0.357*s/0.7+1);   % Values got by the plot of lI
 
 wI_u1_w=squeeze(freqresp(wI_u1,w));
-loglog(w,abs(wI_u1_w),'--','Color',red);
+loglog(w,abs(wI_u1_w),'-','Color',red);
 leg_entries = [leg_entries '$w_{I_1}$'];
 
 auto_plot('Estimating $w_{I_1}$',...
@@ -65,7 +65,7 @@ for k_2_0=k_2(1):diff(k_2)/4:k_2(2)
     end
 end
 loglog(w,lI,'Color',blue);
-leg_entries = [leg_entries '$l_I$|'];
+leg_entries = [leg_entries '$l_{I_2}$|'];
 
 wI_u2=(1/0.15*s+0.1)/(1/0.15*s/1.5+1);   % Values got by the plot of lI
 
@@ -74,7 +74,7 @@ wI_u2=(1/0.15*s+0.1)/(1/0.15*s/1.5+1);   % Values got by the plot of lI
 %0.1 stands for r_0 is the gain at zero frequency
 
 wI_u2_w=squeeze(freqresp(wI_u2,w));
-loglog(w,abs(wI_u2_w),'--','Color',red);
+loglog(w,abs(wI_u2_w),'-','Color',red);
 leg_entries = [leg_entries '$w_{I_2}$'];
 
 auto_plot('Estimating $w_{I_2}$',...
@@ -102,12 +102,12 @@ for tau_3_0=tau_3(1):diff(tau_3)/10:tau_3(2)
     leg_entries = [leg_entries '|'];
 end
 loglog(w,lI,'Color',blue);
-leg_entries = [leg_entries '$l_I$|'];
+leg_entries = [leg_entries '$l_{I_3}$|'];
 
 wI_u3=(1/2.5*s)/(1/2.5*s/0.4+1);   % Values got by the plot of lI
 
 wI_u3_w=squeeze(freqresp(wI_u3,w));
-loglog(w,abs(wI_u3_w),'--','Color',red);
+loglog(w,abs(wI_u3_w),'-','Color',red);
 leg_entries = [leg_entries '$w_{I_3}$'];
 
 auto_plot('Estimating $w_{I_3}$',...
